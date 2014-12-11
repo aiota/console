@@ -1,0 +1,40 @@
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title>AiotA Management Console</title>
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+
+<script>
+	function processController($scope, $http) {
+		$http.get("/processes").success(function(response) { $scope.processes = response; });
+	}
+</script>
+
+</head>
+<body>
+
+<img src="images/aiota.png"><br /><br />
+
+<div data-ng-app="" data-ng-controller="processController">
+	There are <b>{{ processes.length }}</b> running AiotA micro processes<br />
+
+	<table border="1">
+		<tr>
+			<td>Micro process</td>
+			<td>Server</id>
+			<td>pid</id>
+		</tr>
+		<tr ng-repeat="p in processes | orderBy: [ 'process', 'server', 'pid' ]">
+			<td>{{ p.process }}</td>
+			<td>{{ p.server }}</td>
+			<td>{{ p.pid }}</td>
+		</tr>
+	</table>
+</div>
+
+</body>
+
+</html>
