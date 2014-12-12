@@ -82,11 +82,9 @@ app.get("/api/processes", function(request, response) {
 			return;
 		}
 		
-		var now = Date.now() - 20000;
-		
 		var processes = [];
 		
-		var stream = collection.find({ lastSync: { $gte: now } }).stream();
+		var stream = collection.find({}).stream();
 		
 		stream.on("error", function (err) {
 			console.log(err);
@@ -110,5 +108,7 @@ MongoClient.connect("mongodb://" + config.database.host + ":" + config.database.
 	else {
 		db = dbConnection;
 		http.createServer(app).listen(config.port);
+	
+		setInterval(function() { aiota.heartbeat(config.processName, config.serverName, db); }, 10000);
 	}
 });
