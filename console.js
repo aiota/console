@@ -1,3 +1,4 @@
+var aiota = require("aiota-utils");
 var express = require("express");
 var methodOverride = require("method-override");
 var http = require("http");
