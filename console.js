@@ -111,5 +111,10 @@ MongoClient.connect("mongodb://" + config.database.host + ":" + config.database.
 		http.createServer(app).listen(config.port);
 	
 		setInterval(function() { aiota.heartbeat(config.processName, config.serverName, db); }, 10000);
+
+		process.on("SIGTERM", function() {
+			aiota.terminateProcess(config.processName, config.serverName, db);
+			process.exit(1);
+		});
 	}
 });
