@@ -5,35 +5,19 @@
 
 <title>AiotA Management Console</title>
 
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
-
-<script>
-	function processController($scope, $http) {
-		$http.get("/processes").success(function(response) { $scope.processes = response; });
-	}
-</script>
-
 </head>
-<body>
+<body data-ng-app="aiotaConsole">
 
 <img src="images/aiota.png"><br /><br />
 
-<div data-ng-app="" data-ng-controller="processController">
-	There are <b>{{ processes.length }}</b> running AiotA micro processes<br />
+<div data-ng-include="'templates/menu'"></div>
+<div data-ng-view></div>
 
-	<table border="1">
-		<tr>
-			<td>Micro process</td>
-			<td>Server</id>
-			<td>pid</id>
-		</tr>
-		<tr ng-repeat="p in processes | orderBy: [ 'process', 'server', 'pid' ]">
-			<td>{{ p.process }}</td>
-			<td>{{ p.server }}</td>
-			<td>{{ p.pid }}</td>
-		</tr>
-	</table>
-</div>
+<script src="js/jquery.1.11.1.min.js"></script>
+<script src="js/angular.1.2.27.min.js"></script>
+<script src="js/angular-route.1.2.27.min.js"></script>
+
+<script src="js/main.js"></script>
 
 </body>
 

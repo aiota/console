@@ -1,0 +1,16 @@
+<div>
+	There are <b>{{ processes.length }}</b> running AiotA micro processes<br />
+
+	<table border="1">
+		<tr>
+			<td>Micro process</td>
+			<td>Server</id>
+			<td>pid</id>
+		</tr>
+		<tr ng-repeat="p in processes | orderBy: [ 'process', 'server', 'pid' ]">
+			<td>{{ p.process }}</td>
+			<td>{{ p.server }}</td>
+			<td>{{ p.pid }}</td>
+		</tr>
+	</table>
+</div>
