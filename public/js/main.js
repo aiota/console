@@ -17,16 +17,16 @@ app.controller("pageController", function (/* $scope, $location, $http */) {
 app.controller("processController", function ($scope, $http) {
 	$http.get("/api/processes").success(function(response) { $scope.processes = response; });
 	
-	$scope.onRestart = function(pid) {
-		$http.jsonp("http://localhost:8081/api/action?callback=JSON_CALLBACK&type=restart&pid=" + pid).success(function(response) { alert(JSON.stringify(response)); });
-	}
-	
-	$scope.onKill = function(pid) {
-		alert("Kill: " + pid);
+	$scope.onRestart = function(process, pid) {
+		$http.jsonp("http://localhost:8081/api/action?callback=JSON_CALLBACK&type=restart&process=" + process + "&pid=" + pid).success(function(response) { alert(JSON.stringify(response)); });
 	}
 	
 	$scope.onStop = function(pid) {
-		alert("Stop: " + pid);
+		$http.jsonp("http://localhost:8081/api/action?callback=JSON_CALLBACK&type=stop&process=" + process + "&pid=" + pid).success(function(response) { alert(JSON.stringify(response)); });
+	}
+	
+	$scope.onKill = function(pid) {
+		$http.jsonp("http://localhost:8081/api/action?callback=JSON_CALLBACK&pid=" + pid).success(function(response) { alert(JSON.stringify(response)); });
 	}
 	
 	$scope.onSpawn = function(process, server) {
