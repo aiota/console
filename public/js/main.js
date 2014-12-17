@@ -17,19 +17,19 @@ app.controller("pageController", function (/* $scope, $location, $http */) {
 app.controller("processController", function ($scope, $http) {
 	$http.get("/api/processes").success(function(response) { $scope.processes = response; });
 	
-	$scope.onRestart = function(process, pid) {
-		$http.jsonp("http://localhost:8081/api/action?callback=JSON_CALLBACK&type=restart&process=" + process + "&pid=" + pid).success(function(response) { alert(JSON.stringify(response)); });
+	$scope.onRestart = function(process, server, pid) {
+		$http.jsonp("http://" + server + ":8081/api/action?callback=JSON_CALLBACK&type=restart&process=" + process + "&pid=" + pid).success(function(response) { alert(JSON.stringify(response)); });
 	}
 	
-	$scope.onStop = function(process, pid) {
-		$http.jsonp("http://localhost:8081/api/action?callback=JSON_CALLBACK&type=stop&process=" + process + "&pid=" + pid).success(function(response) { alert(JSON.stringify(response)); });
+	$scope.onStop = function(process, server, pid) {
+		$http.jsonp("http://" + server + ":8081/api/action?callback=JSON_CALLBACK&type=stop&process=" + process + "&pid=" + pid).success(function(response) { alert(JSON.stringify(response)); });
 	}
 	
-	$scope.onKill = function(process, pid) {
-		$http.jsonp("http://localhost:8081/api/action?callback=JSON_CALLBACK&type=kill&process=" + process + "&pid=" + pid).success(function(response) { alert(JSON.stringify(response)); });
+	$scope.onKill = function(process, server, pid) {
+		$http.jsonp("http://" + server + ":8081/api/action?callback=JSON_CALLBACK&type=kill&process=" + process + "&pid=" + pid).success(function(response) { alert(JSON.stringify(response)); });
 	}
 	
 	$scope.onSpawn = function(process, server) {
-		alert("Spawn: " + process + ", " + server);
+		$http.jsonp("http://" + server + ":8081/api/action?callback=JSON_CALLBACK&type=spawn&process=" + process).success(function(response) { alert(JSON.stringify(response)); });
 	}
 });
