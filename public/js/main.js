@@ -21,7 +21,7 @@ app.controller("processController", function ($scope, $http) {
 		$http.jsonp("http://localhost:8081/api/action?callback=JSON_CALLBACK&type=restart&process=" + process + "&pid=" + pid).success(function(response) { alert(JSON.stringify(response)); });
 	}
 	
-	$scope.onStop = function(pid) {
+	$scope.onStop = function(process, pid) {
 		$http.jsonp("http://localhost:8081/api/action?callback=JSON_CALLBACK&type=stop&process=" + process + "&pid=" + pid).success(function(response) { alert(JSON.stringify(response)); });
 	}
 	
