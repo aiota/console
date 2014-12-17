@@ -14,7 +14,7 @@
 			<td>{{ p.status }}</td>
 			<td>{{ p.runs.current + "/" + p.runs.maxRuns }}</td>
 			<td ng-click="onRestart(p.process, p.pid)">restart</td>
-			<td ng-click="onKill(p.pid)">kill</td>
+			<td ng-click="onKill(p.process, p.pid)">kill</td>
 			<td ng-click="onStop(p.process, p.pid)">stop</td>
 			<td ng-click="onSpawn(p.process, p.server)">spawn</td>
 		</tr>
