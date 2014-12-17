@@ -26,7 +26,7 @@ app.controller("processController", function ($scope, $http) {
 	}
 	
 	$scope.onKill = function(pid) {
-		$http.jsonp("http://localhost:8081/api/action?callback=JSON_CALLBACK&pid=" + pid).success(function(response) { alert(JSON.stringify(response)); });
+		$http.jsonp("http://localhost:8081/api/action?callback=JSON_CALLBACK&type=kill&process=" + process + "&pid=" + pid).success(function(response) { alert(JSON.stringify(response)); });
 	}
 	
 	$scope.onSpawn = function(process, server) {
