@@ -16,4 +16,20 @@ app.controller("pageController", function (/* $scope, $location, $http */) {
 
 app.controller("processController", function ($scope, $http) {
 	$http.get("/api/processes").success(function(response) { $scope.processes = response; });
+	
+	$scope.onRestart = function(pid) {
+		$http.jsonp("http://localhost:8081/api/action?callback=JSON_CALLBACK&type=restart&pid=" + pid).success(function(response) { alert(JSON.stringify(response)); });
+	}
+	
+	$scope.onKill = function(pid) {
+		alert("Kill: " + pid);
+	}
+	
+	$scope.onStop = function(pid) {
+		alert("Stop: " + pid);
+	}
+	
+	$scope.onSpawn = function(process, server) {
+		alert("Spawn: " + process + ", " + server);
+	}
 });

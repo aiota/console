@@ -1,6 +1,6 @@
 {
 	"name": "aiota-console",
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"description": "AiotA Management Console",
 	"main": "console.js",
 	"repository": {
