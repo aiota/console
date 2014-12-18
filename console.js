@@ -3,8 +3,8 @@ var express = require("express");
 var methodOverride = require("method-override");
 var http = require("http");
 var MongoClient = require("mongodb").MongoClient;
-var config = require("./config");
-
+var config = null;
+var processName = "console.js";
 var db = null;
 
 function bodyParser(request, response, next)
@@ -102,20 +102,32 @@ app.get("/api/processes", function(request, response) {
 	});
 });
 
-MongoClient.connect("mongodb://" + config.database.host + ":" + config.database.port + "/aiota", function(err, dbConnection) {
+var args = process.argv.slice(2);
+ 
+MongoClient.connect("mongodb://" + args[0] + ":" + args[1] + "/" + args[2], function(err, dbConnection) {
 	if (err) {
-		console.log(err);
+		aiota.log(processName, "", null, err);
 	}
 	else {
 		db = dbConnection;
-		http.createServer(app).listen(config.port);
-	
-		setInterval(function() { aiota.heartbeat(config.processName, config.serverName, db); }, 10000);
 
-		process.on("SIGTERM", function() {
-			aiota.terminateProcess(config.processName, config.serverName, db, function() {
-				process.exit(1);
-			});
+		aiota.getConfig(db, function(c) {
+			if (c == null) {
+				aiota.log(processName, "", db, "Error getting config from database");
+			}
+			else {
+				config = c;
+
+				http.createServer(app).listen(config.ports["aiota-console"]);
+			
+				setInterval(function() { aiota.heartbeat(processName, config.serverName, db); }, 10000);
+		
+				process.on("SIGTERM", function() {
+					aiota.terminateProcess(processName, config.serverName, db, function() {
+						process.exit(1);
+					});
+				});
+			}
 		});
 	}
 });
