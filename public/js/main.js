@@ -15,21 +15,25 @@ app.controller("pageController", function (/* $scope, $location, $http */) {
 });
 
 app.controller("processController", function ($scope, $http) {
-	$http.get("/api/processes").success(function(response) { $scope.processes = response; });
-	
-	$scope.onRestart = function(process, server, pid) {
-		$http.jsonp("http://" + server + ":8081/api/action?callback=JSON_CALLBACK&type=restart&process=" + process + "&pid=" + pid).success(function(response) { alert(JSON.stringify(response)); });
+	$scope.loadData = function() {
+		$http.get("/api/processes").success(function(response) { $scope.processes = response; });
 	}
 	
+	$scope.onRestart = function(process, server, pid) {
+		$http.jsonp("http://" + server + ":8081/api/action?callback=JSON_CALLBACK&type=restart&process=" + process + "&pid=" + pid).success(function(response) { $scope.loadData(); setTimeout(function() { $scope.loadData(); }, 100); }); }
+	
 	$scope.onStop = function(process, server, pid) {
-		$http.jsonp("http://" + server + ":8081/api/action?callback=JSON_CALLBACK&type=stop&process=" + process + "&pid=" + pid).success(function(response) { alert(JSON.stringify(response)); });
+		$http.jsonp("http://" + server + ":8081/api/action?callback=JSON_CALLBACK&type=stop&process=" + process + "&pid=" + pid).success(function(response) { $scope.loadData(); });
 	}
 	
 	$scope.onKill = function(process, server, pid) {
-		$http.jsonp("http://" + server + ":8081/api/action?callback=JSON_CALLBACK&type=kill&process=" + process + "&pid=" + pid).success(function(response) { alert(JSON.stringify(response)); });
+		$http.jsonp("http://" + server + ":8081/api/action?callback=JSON_CALLBACK&type=kill&process=" + process + "&pid=" + pid).success(function(response) { $scope.loadData(); setTimeout(function() { $scope.loadData(); }, 100); });
 	}
 	
 	$scope.onSpawn = function(process, server) {
-		$http.jsonp("http://" + server + ":8081/api/action?callback=JSON_CALLBACK&type=spawn&process=" + process).success(function(response) { alert(JSON.stringify(response)); });
+		$http.jsonp("http://" + server + ":8081/api/action?callback=JSON_CALLBACK&type=spawn&process=" + process).success(function(response) { setTimeout(function() { $scope.loadData(); }, 100); });
 	}
+	
+	// Initial load
+	$scope.loadData();
 });
