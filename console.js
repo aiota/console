@@ -92,6 +92,7 @@ app.get("/api/processes", function(request, response) {
 		});
 
 		stream.on("data", function(doc) {
+			doc["controllerPort"] = config.ports["aiota-controller"];
 			processes.push(doc);
 		});
 
