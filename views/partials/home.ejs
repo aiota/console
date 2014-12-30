@@ -7,9 +7,10 @@
 			<td>status</id>
 			<td>runs</id>
 		</tr>
-		<tr ng-repeat="p in processes | orderBy: [ 'process', 'server', 'pid' ]">
+		<tr ng-repeat="p in processes | orderBy: [ 'process', 'server.name', 'pid' ]">
 			<td>{{ p.process }}</td>
-			<td>{{ p.server }}</td>
+			<td>{{ p.server.name }}</td>
+			<td>{{ p.server.ip }}</td>
 			<td>{{ p.pid }}</td>
 			<td>{{ p.status }}</td>
 			<td>{{ p.runs.current + "/" + p.runs.maxRuns }}</td>
