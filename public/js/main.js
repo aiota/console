@@ -26,10 +26,6 @@ app.controller("processController", function ($scope, $http) {
 		$http.jsonp("http://" + server + ":" + port + "/api/action?callback=JSON_CALLBACK&type=stop&process=" + process + "&pid=" + pid).success(function(response) { $scope.loadData(); });
 	}
 	
-	$scope.onKill = function(process, server, pid, port) {
-		$http.jsonp("http://" + server + ":" + port + "/api/action?callback=JSON_CALLBACK&type=kill&process=" + process + "&pid=" + pid).success(function(response) { $scope.loadData(); setTimeout(function() { $scope.loadData(); }, 100); });
-	}
-	
 	$scope.onSpawn = function(process, server, port) {
 		$http.jsonp("http://" + server + ":" + port + "/api/action?callback=JSON_CALLBACK&type=spawn&process=" + process).success(function(response) { setTimeout(function() { $scope.loadData(); }, 100); });
 	}
