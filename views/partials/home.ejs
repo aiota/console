@@ -2,7 +2,8 @@
 	<table border="1">
 		<tr>
 			<td>micro process</td>
-			<td>server</id>
+			<td>server name</id>
+			<td>server ip</id>
 			<td>pid</id>
 			<td>status</id>
 			<td>runs</id>
@@ -14,10 +15,10 @@
 			<td>{{ p.pid }}</td>
 			<td>{{ p.status }}</td>
 			<td>{{ p.runs.current + "/" + p.runs.maxRuns }}</td>
-			<td ng-click="onRestart(p.process, p.server, p.pid, p.controllerPort)">restart</td>
-			<td ng-click="onKill(p.process, p.server, p.pid, p.controllerPort)">kill</td>
-			<td ng-click="onStop(p.process, p.server, p.pid, p.controllerPort)">stop</td>
-			<td ng-click="onSpawn(p.process, p.server, p.controllerPort)">spawn</td>
+			<td ng-click="onRestart(p.process, p.server.ip, p.pid, p.controllerPort)">restart</td>
+			<td ng-click="onKill(p.process, p.server.ip, p.pid, p.controllerPort)">kill</td>
+			<td ng-click="onStop(p.process, p.server.ip, p.pid, p.controllerPort)">stop</td>
+			<td ng-click="onSpawn(p.process, p.server.ip, p.controllerPort)">spawn</td>
 		</tr>
 	</table>
 </div>
