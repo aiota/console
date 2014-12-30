@@ -1,6 +1,7 @@
 var aiota = require("aiota-utils");
 var express = require("express");
 var methodOverride = require("method-override");
+var path = require("path");
 var http = require("http");
 var MongoClient = require("mongodb").MongoClient;
 var config = null;
@@ -106,24 +107,24 @@ var args = process.argv.slice(2);
  
 MongoClient.connect("mongodb://" + args[0] + ":" + args[1] + "/" + args[2], function(err, dbConnection) {
 	if (err) {
-		aiota.log(__filename, "", null, err);
+		aiota.log(path.basename(__filename), "", null, err);
 	}
 	else {
 		db = dbConnection;
 
 		aiota.getConfig(db, function(c) {
 			if (c == null) {
-				aiota.log(__filename, "", db, "Error getting config from database");
+				aiota.log(path.basename(__filename), "", db, "Error getting config from database");
 			}
 			else {
 				config = c;
 
 				http.createServer(app).listen(config.ports["aiota-console"]);
 			
-				setInterval(function() { aiota.heartbeat(__filename, config.server, db); }, 10000);
+				setInterval(function() { aiota.heartbeat(path.basename(__filename), config.server, db); }, 10000);
 		
 				process.on("SIGTERM", function() {
-					aiota.terminateProcess(__filename, config.server, db, function() {
+					aiota.terminateProcess(path.basename(__filename), config.server, db, function() {
 						process.exit(1);
 					});
 				});
